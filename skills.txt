@@ -1,0 +1,15 @@
+python
+java
+c++
+sql
+git
+html
+css
+javascript
+api
+machine learning
+docker
+aws
+flask
+django
+react
