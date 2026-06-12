@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+</head>
+<body>
+
+    <h1>AI Resume Analyzer</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <p>Upload Resume PDF:</p>
+        <input type="file" name="resume">
+
+        <br><br>
+
+        <p>Upload Job Description:</p>
+        <input type="file" name="jd">
+
+        <br><br>
+
+        <button type="submit">Analyze Resume</button>
+
+    </form>
+<hr>
+
+{% if score %}
+
+<h2>Resume Score</h2>
+<p>{{ score }}</p>
+ <!--Jinja = Flask's template language.it is a placeholder that will be replaced with the actual score value when the template is rendered.-->
+ 
+{% endif %}
+
+
+</body>
+</html>
