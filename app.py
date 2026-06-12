@@ -37,14 +37,30 @@ def home():
      
       print("Resume Saved:", resume_path)
       print("JD Saved:", jd_path)
-     
+      
+      
+      
+      with open(jd_path, "r") as file:
+       jd = file.read().lower()
+      match_score, matched_skills, missing_jd_skills, jd_skills = analyze_job_description(
+      jd,
+      skills,
+      found_skills
+       ) 
+      
+      
       return render_template(
       "index.html",
       score=score,
       found_skills=found_skills,
       missing_skills=missing_skills,
-      suggestions=suggestions
+      suggestions=suggestions,
+      match_score=match_score,
+      matched_skills=matched_skills,
+      missing_jd_skills=missing_jd_skills
       )
+      
+              
     
     return render_template("index.html")
 #Open index.html and send it to browser

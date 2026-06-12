@@ -29,9 +29,77 @@
 <h2>Resume Score</h2>
 <p>{{ score }}</p>
  <!--Jinja = Flask's template language.it is a placeholder that will be replaced with the actual score value when the template is rendered.-->
- 
+
 {% endif %}
 
+{% if found_skills %}
+
+<h2>Skills Found</h2>
+
+<ul>
+    {% for skill in found_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+
+{% if missing_skills %}
+
+<h2>Missing Skills</h2>
+
+<ul>
+    {% for skill in missing_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+
+{% if suggestions %}
+
+<h2>Suggestions</h2>
+
+<ul>
+    {% for suggestion in suggestions %}
+        <li>{{ suggestion }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+{% if match_score is defined %}
+
+<h2>Job Match Score</h2>
+<p>{{ match_score }}%</p>
+
+{% endif %}
+
+{% if matched_skills %}
+
+<h2>Matched Skills</h2>
+
+<ul>
+    {% for skill in matched_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+{% if missing_jd_skills %}
+
+<h2>Skills Missing For Job</h2>
+
+<ul>
+    {% for skill in missing_jd_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
 
 </body>
 </html>
