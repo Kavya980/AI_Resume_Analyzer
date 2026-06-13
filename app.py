@@ -29,7 +29,13 @@ def home():
 
       found_skills = find_skills(resume, skills)
       
-      recommended_role = recommend_role(found_skills)
+      recommended_role, role_scores = recommend_role(found_skills)      
+      
+      sorted_role_scores = sorted(
+    role_scores.items(),
+    key=lambda x: x[1],
+    reverse=True
+)
       
       ats_score = calculate_ats_score(resume, found_skills)
 
@@ -50,10 +56,15 @@ def home():
       
       skill_gap_feedback = get_skill_gap_feedback(missing_jd_skills)
       
+      
+      
       return render_template(
       "index.html",
+      analysis_done = True,
       ats_score=ats_score,
       recommended_role=recommended_role,
+      role_scores=role_scores,
+      sorted_role_scores=sorted_role_scores,
       found_skills=found_skills,
       missing_skills=missing_skills,
       suggestions=suggestions,
@@ -62,8 +73,24 @@ def home():
       missing_jd_skills=missing_jd_skills,
       skill_gap_feedback=skill_gap_feedback,
       )
-          
-    return render_template("index.html")
+
+    
+
+    return render_template(
+    "index.html",
+    analysis_done = False,
+    ats_score=None,
+    match_score=None,
+    recommended_role=None,
+    role_scores={},
+    sorted_role_scores=[],
+    found_skills=[],
+    missing_skills=[],
+    suggestions=[],
+    matched_skills=[],
+    missing_jd_skills=[],
+    skill_gap_feedback=None
+)
 #Open index.html and send it to browser
 
 app.run(debug=True)

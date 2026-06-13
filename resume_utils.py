@@ -92,17 +92,22 @@ def recommend_role(found_skills):
     best_role = "No Clear Recommendation"
     highest_score = 0
 
+    role_scores = {}
+
     for role, role_skills in roles.items():
 
-        score = 0
+        matched = 0
 
         for skill in role_skills:
             if skill in found_skills:
-                score += 1
+                matched += 1
 
-        if score > highest_score:
-            highest_score = score
+        percentage = (matched / len(role_skills)) * 100
+
+        role_scores[role] = round(percentage, 2)
+
+        if percentage > highest_score:
+            highest_score = percentage
             best_role = role
 
-    return best_role
-
+    return best_role, role_scores

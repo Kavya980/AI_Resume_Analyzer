@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>AI Resume Analyzer</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
 <body>
 
@@ -24,20 +28,37 @@
     </form>
 <hr>
 
+{% if analysis_done %}
+
+ALL RESULTS HERE
+
+
 {% if found_skills %}
 
 <h2>ATS Score</h2>
 
+<div class="progress-bar">
+    <div
+        class="progress-fill"
+        style="width: {{ ats_score }}%;"
+    >
+        {{ ats_score }}%
+    </div>
+</div>
+
+<!--<h2>ATS Score</h2>
+
 <p>{{ ats_score }}/100</p>
- <!--Jinja = Flask's template language.it is a placeholder that will be replaced with the actual score value when the template is rendered.-->
+ Jinja = Flask's template language.it is a placeholder that will be replaced with the actual score value when the template is rendered.-->
 
 {% endif %}
 
-{% if match_score is defined %}
+{% if match_score %}
 
 <h2>Job Match Score</h2>
-<p>{{ match_score }}%</p>
-
+<p>
+    <strong>{{ match_score }}%</strong>
+</p>
 {% endif %}
 
 
@@ -45,7 +66,23 @@
 
 <h2>Recommended Career Role</h2>
 
-<p>{{ recommended_role }}</p>
+<div class="role-box">
+    {{ recommended_role }}
+</div>
+
+{% endif %}
+
+{% if role_scores %}
+
+<h2>Career Fit Analysis</h2>
+
+<ul>
+{% for role, score in sorted_role_scores %}
+   <li>
+    <strong>{{ role }}</strong> - {{ score }}%
+</li>
+{% endfor %}
+</ul>
 
 {% endif %}
 
@@ -123,6 +160,6 @@
 
 {% endif %}
 
-
+{% endif %}
 </body>
 </html>
