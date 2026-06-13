@@ -16,8 +16,7 @@
         <p>Upload Resume PDF:</p>
 
 <label for="resume" class="upload-box" id="resume-box">
-    Drag & Drop Resume Here<br>
-    or Click to Upload
+    📄 Click to Upload Resume
 </label>
 
 <input
@@ -26,14 +25,13 @@
     name="resume"
     hidden
 >
-
+    
         <br><br>
 
         <p>Upload Job Description:</p>
 
 <label for="jd" class="upload-box" id="jd-box">
-    Drag & Drop JD Here<br>
-    or Click to Upload
+    💼 Click to Upload Job Description
 </label>
 
 <input
@@ -57,7 +55,7 @@ ALL RESULTS HERE
 
 {% if found_skills %}
 <div class="result-card">
-
+ <div class="card">
     <h2>ATS Score</h2>
 
     <div class="progress-bar">
@@ -66,7 +64,7 @@ ALL RESULTS HERE
              {{ ats_score }}%
         </div>
     </div>
-
+</div>
 </div>
 <!--<h2>ATS Score</h2>
 
@@ -75,22 +73,24 @@ ALL RESULTS HERE
 
 {% endif %}
 
+
 {% if match_score %}
 
 <div class="result-card">
-
+<div class="card">
     <h2>Job Match Score</h2>
 
     <p><strong>{{ match_score }}%</strong></p>
 
-</div>
+</div></div>
 {% endif %}
+
 
 
 {% if recommended_role %}
 
 <div class="result-card">
-
+<div class="card">
     <h2>Recommended Career Role</h2>
 
     <div class="role-box">
@@ -98,30 +98,47 @@ ALL RESULTS HERE
     </div>
 
 </div>
-
+</div>
 {% endif %}
+
+
 
 {% if role_scores %}
 
 <div class="result-card">
-
+<div class="card">
     <h2>Career Fit Analysis</h2>
 
     <ul>
         {% for role, score in sorted_role_scores %}
-        <li>
-            <strong>{{ role }}</strong> - {{ score }}%
-        </li>
-        {% endfor %}
-    </ul>
+
+<p>
+    <strong>{{ role }}</strong>
+</p>
+
+<div class="progress-bar">
+
+    <div
+        class="progress-fill"
+        style="width: {{ score }}%;"
+    >
+        {{ score }}%
+    </div>
 
 </div>
+
+{% endfor %}
+    </ul>
+
+</div></div>
 {% endif %}
+
 
 
 {% if found_skills %}
 
 <div class="result-card">
+    <div class="card">
 <h2>Skills Found</h2>
 
 <ul>
@@ -129,21 +146,23 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-</div>
+</div></div>
 {% endif %}
+
 
 
 {% if matched_skills %}
 
 <div class="result-card">
-<h2>Matched Skills</h2>
+<div class="card">
+    <h2>Matched Skills</h2>
 
 <ul>
     {% for skill in matched_skills %}
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-</div>
+</div></div>
 {% endif %}
 
 
@@ -151,6 +170,7 @@ ALL RESULTS HERE
 {% if missing_skills %}
 
 <div class="result-card">
+    <div class="card">
 <h2>Missing General Skills</h2>
 
 <ul>
@@ -158,12 +178,14 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-</div>
+</div></div>
 {% endif %}
+
 
 
 {% if missing_jd_skills %}
 <div class="result-card">
+    <div class="card">
 <h2>Skills Missing For Job</h2>
 
 <ul>
@@ -171,22 +193,26 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-</div>
+</div></div>
 {% endif %}
+
 
 {% if skill_gap_feedback %}
 
 <div class="result-card">
+    <div class="card">
 <h2>Skill Gap Analysis</h2>
 
 <p>{{ skill_gap_feedback }}</p>
-</div>
+</div></div>
 {% endif %}
+
 
 
 {% if suggestions %}
 
 <div class="result-card">
+    <div class="card">
 <h2>Suggestions</h2>
 
 <ul>
@@ -194,7 +220,7 @@ ALL RESULTS HERE
         <li>{{ suggestion }}</li>
     {% endfor %}
 </ul>
-
+</div>
 </div>
 {% endif %}
 
@@ -202,7 +228,6 @@ ALL RESULTS HERE
 
 
 <script>
-
 document.getElementById("resume").addEventListener("change", function() {
 
     document.getElementById("resume-box").innerHTML =
@@ -224,34 +249,15 @@ resumeBox.addEventListener("dragover", function(e) {
     e.preventDefault();
 });
 
-resumeBox.addEventListener("drop", function(e) {
-    e.preventDefault();
-
-    const dt = new DataTransfer();
-
-    dt.items.add(e.dataTransfer.files[0]);
-
-    resumeInput.files = dt.files;
-
-    resumeBox.innerHTML =
-        "Selected: " + dt.files[0].name;
-});
+// resumeBox.addEventListener("drop", function(e) { e.preventDefault(); const dt = new DataTransfer();    dt.items.add(e.dataTransfer.files[0]);
+   // resumeInput.files = dt.files;    resumeBox.innerHTML =
+  //      "Selected: " + dt.files[0].name;}); 
 
 const jdBox = document.getElementById("jd-box");
 const jdInput = document.getElementById("jd");
 
-jdBox.addEventListener("drop", function(e) {
-    e.preventDefault();
-
-    const dt = new DataTransfer();
-
-    dt.items.add(e.dataTransfer.files[0]);
-
-    jdInput.files = dt.files;
-
-    jdBox.innerHTML =
-        "Selected: " + dt.files[0].name;
-});
+// jdBox.addEventListener("drop", function(e)    e.preventDefault(); const dt = new DataTransfer();dt.items.add(e.dataTransfer.files[0]);jdInput.files = dt.files;jdBox.innerHTML =
+  //      "Selected: " + dt.files[0].name;}); 
 
 </script>
 </body>
