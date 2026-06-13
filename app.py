@@ -28,8 +28,10 @@ def home():
       resume = extract_resume_text(resume_path)
 
       found_skills = find_skills(resume, skills)
-
-      score = calculate_score(found_skills, resume)
+      
+      recommended_role = recommend_role(found_skills)
+      
+      ats_score = calculate_ats_score(resume, found_skills)
 
       missing_skills = get_missing_skills(found_skills, skills)
 
@@ -37,8 +39,6 @@ def home():
      
       print("Resume Saved:", resume_path)
       print("JD Saved:", jd_path)
-      
-      
       
       with open(jd_path, "r") as file:
        jd = file.read().lower()
@@ -48,20 +48,21 @@ def home():
       found_skills
        ) 
       
+      skill_gap_feedback = get_skill_gap_feedback(missing_jd_skills)
       
       return render_template(
       "index.html",
-      score=score,
+      ats_score=ats_score,
+      recommended_role=recommended_role,
       found_skills=found_skills,
       missing_skills=missing_skills,
       suggestions=suggestions,
       match_score=match_score,
       matched_skills=matched_skills,
-      missing_jd_skills=missing_jd_skills
+      missing_jd_skills=missing_jd_skills,
+      skill_gap_feedback=skill_gap_feedback,
       )
-      
-              
-    
+          
     return render_template("index.html")
 #Open index.html and send it to browser
 

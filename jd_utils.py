@@ -24,3 +24,16 @@ def analyze_job_description(jd, skills, found_skills):
         match_score = 0
 
     return match_score, matched_skills, missing_jd_skills, jd_skills
+
+
+def get_skill_gap_feedback(missing_jd_skills):
+
+    if len(missing_jd_skills) == 0:
+        return "Excellent! Your resume covers all required skills."
+
+    feedback = (
+        f"You are missing {len(missing_jd_skills)} required skill(s). "
+        "Recommended learning order:"
+    )
+
+    return feedback

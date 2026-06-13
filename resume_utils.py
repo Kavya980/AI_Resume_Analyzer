@@ -32,31 +32,6 @@ def get_missing_skills(found_skills, skills):
     return missing_skills
 
 
-def calculate_score(found_skills, resume):
-
-    score = len(found_skills) * 5
-
-    if "projects" in resume:
-        score += 20
-
-    if "github" in resume:
-        score += 10
-
-    if "linkedin" in resume:
-        score += 10
-
-    if "education" in resume:
-        score += 5
-
-    if "experience" in resume:
-        score += 5
-
-    if score > 100:
-        score = 100
-
-    return score
-
-
 def get_suggestions(resume):
 
     suggestions = []
@@ -77,3 +52,57 @@ def get_suggestions(resume):
         suggestions.append("Add Experience Section")
          
     return suggestions
+
+
+def calculate_ats_score(resume, found_skills):
+
+    ats_score = 0
+
+    ats_score += min(len(found_skills) * 5, 50)
+
+    if "projects" in resume:
+        ats_score += 10
+
+    if "education" in resume:
+        ats_score += 10
+
+    if "experience" in resume:
+        ats_score += 10
+
+    if "github" in resume:
+        ats_score += 10
+
+    if "linkedin" in resume:
+        ats_score += 10
+
+    if ats_score > 100:
+        ats_score = 100
+
+    return ats_score
+
+def recommend_role(found_skills):
+
+    roles = {
+        "Frontend Developer": ["html", "css", "javascript"],
+        "Backend Developer": ["python", "git", "api"],
+        "Data Analyst": ["python", "sql"],
+        "Machine Learning Engineer": ["python", "machine learning"]
+    }
+
+    best_role = "No Clear Recommendation"
+    highest_score = 0
+
+    for role, role_skills in roles.items():
+
+        score = 0
+
+        for skill in role_skills:
+            if skill in found_skills:
+                score += 1
+
+        if score > highest_score:
+            highest_score = score
+            best_role = role
+
+    return best_role
+

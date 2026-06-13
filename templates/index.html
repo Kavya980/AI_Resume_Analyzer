@@ -24,13 +24,31 @@
     </form>
 <hr>
 
-{% if score %}
+{% if found_skills %}
 
-<h2>Resume Score</h2>
-<p>{{ score }}</p>
+<h2>ATS Score</h2>
+
+<p>{{ ats_score }}/100</p>
  <!--Jinja = Flask's template language.it is a placeholder that will be replaced with the actual score value when the template is rendered.-->
 
 {% endif %}
+
+{% if match_score is defined %}
+
+<h2>Job Match Score</h2>
+<p>{{ match_score }}%</p>
+
+{% endif %}
+
+
+{% if recommended_role %}
+
+<h2>Recommended Career Role</h2>
+
+<p>{{ recommended_role }}</p>
+
+{% endif %}
+
 
 {% if found_skills %}
 
@@ -45,15 +63,50 @@
 {% endif %}
 
 
+{% if matched_skills %}
+
+<h2>Matched Skills</h2>
+
+<ul>
+    {% for skill in matched_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+
+
 {% if missing_skills %}
 
-<h2>Missing Skills</h2>
+<h2>Missing General Skills</h2>
 
 <ul>
     {% for skill in missing_skills %}
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
+
+{% endif %}
+
+
+{% if missing_jd_skills %}
+
+<h2>Skills Missing For Job</h2>
+
+<ul>
+    {% for skill in missing_jd_skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+{% if skill_gap_feedback %}
+
+<h2>Skill Gap Analysis</h2>
+
+<p>{{ skill_gap_feedback }}</p>
 
 {% endif %}
 
@@ -70,36 +123,6 @@
 
 {% endif %}
 
-{% if match_score is defined %}
-
-<h2>Job Match Score</h2>
-<p>{{ match_score }}%</p>
-
-{% endif %}
-
-{% if matched_skills %}
-
-<h2>Matched Skills</h2>
-
-<ul>
-    {% for skill in matched_skills %}
-        <li>{{ skill }}</li>
-    {% endfor %}
-</ul>
-
-{% endif %}
-
-{% if missing_jd_skills %}
-
-<h2>Skills Missing For Job</h2>
-
-<ul>
-    {% for skill in missing_jd_skills %}
-        <li>{{ skill }}</li>
-    {% endfor %}
-</ul>
-
-{% endif %}
 
 </body>
 </html>
