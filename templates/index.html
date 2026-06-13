@@ -14,12 +14,34 @@
     <form method="POST" enctype="multipart/form-data">
 
         <p>Upload Resume PDF:</p>
-        <input type="file" name="resume">
+
+<label for="resume" class="upload-box" id="resume-box">
+    Drag & Drop Resume Here<br>
+    or Click to Upload
+</label>
+
+<input
+    type="file"
+    id="resume"
+    name="resume"
+    hidden
+>
 
         <br><br>
 
         <p>Upload Job Description:</p>
-        <input type="file" name="jd">
+
+<label for="jd" class="upload-box" id="jd-box">
+    Drag & Drop JD Here<br>
+    or Click to Upload
+</label>
+
+<input
+    type="file"
+    id="jd"
+    name="jd"
+    hidden
+>
 
         <br><br>
 
@@ -34,18 +56,18 @@ ALL RESULTS HERE
 
 
 {% if found_skills %}
+<div class="result-card">
 
-<h2>ATS Score</h2>
+    <h2>ATS Score</h2>
 
-<div class="progress-bar">
-    <div
-        class="progress-fill"
-        style="width: {{ ats_score }}%;"
-    >
-        {{ ats_score }}%
+    <div class="progress-bar">
+        <div class="progress-fill"
+             style="width: {{ ats_score }}%;">
+             {{ ats_score }}%
+        </div>
     </div>
-</div>
 
+</div>
 <!--<h2>ATS Score</h2>
 
 <p>{{ ats_score }}/100</p>
@@ -55,40 +77,51 @@ ALL RESULTS HERE
 
 {% if match_score %}
 
-<h2>Job Match Score</h2>
-<p>
-    <strong>{{ match_score }}%</strong>
-</p>
+<div class="result-card">
+
+    <h2>Job Match Score</h2>
+
+    <p><strong>{{ match_score }}%</strong></p>
+
+</div>
 {% endif %}
 
 
 {% if recommended_role %}
 
-<h2>Recommended Career Role</h2>
+<div class="result-card">
 
-<div class="role-box">
-    {{ recommended_role }}
+    <h2>Recommended Career Role</h2>
+
+    <div class="role-box">
+        {{ recommended_role }}
+    </div>
+
 </div>
 
 {% endif %}
 
 {% if role_scores %}
 
-<h2>Career Fit Analysis</h2>
+<div class="result-card">
 
-<ul>
-{% for role, score in sorted_role_scores %}
-   <li>
-    <strong>{{ role }}</strong> - {{ score }}%
-</li>
-{% endfor %}
-</ul>
+    <h2>Career Fit Analysis</h2>
 
+    <ul>
+        {% for role, score in sorted_role_scores %}
+        <li>
+            <strong>{{ role }}</strong> - {{ score }}%
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
 {% endif %}
 
 
 {% if found_skills %}
 
+<div class="result-card">
 <h2>Skills Found</h2>
 
 <ul>
@@ -96,12 +129,13 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-
+</div>
 {% endif %}
 
 
 {% if matched_skills %}
 
+<div class="result-card">
 <h2>Matched Skills</h2>
 
 <ul>
@@ -109,13 +143,14 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-
+</div>
 {% endif %}
 
 
 
 {% if missing_skills %}
 
+<div class="result-card">
 <h2>Missing General Skills</h2>
 
 <ul>
@@ -123,12 +158,12 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-
+</div>
 {% endif %}
 
 
 {% if missing_jd_skills %}
-
+<div class="result-card">
 <h2>Skills Missing For Job</h2>
 
 <ul>
@@ -136,20 +171,22 @@ ALL RESULTS HERE
         <li>{{ skill }}</li>
     {% endfor %}
 </ul>
-
+</div>
 {% endif %}
 
 {% if skill_gap_feedback %}
 
+<div class="result-card">
 <h2>Skill Gap Analysis</h2>
 
 <p>{{ skill_gap_feedback }}</p>
-
+</div>
 {% endif %}
 
 
 {% if suggestions %}
 
+<div class="result-card">
 <h2>Suggestions</h2>
 
 <ul>
@@ -158,8 +195,64 @@ ALL RESULTS HERE
     {% endfor %}
 </ul>
 
+</div>
 {% endif %}
 
 {% endif %}
+
+
+<script>
+
+document.getElementById("resume").addEventListener("change", function() {
+
+    document.getElementById("resume-box").innerHTML =
+        "Selected: " + this.files[0].name;
+
+});
+
+document.getElementById("jd").addEventListener("change", function() {
+
+    document.getElementById("jd-box").innerHTML =
+        "Selected: " + this.files[0].name;
+
+});
+
+const resumeBox = document.getElementById("resume-box");
+const resumeInput = document.getElementById("resume");
+
+resumeBox.addEventListener("dragover", function(e) {
+    e.preventDefault();
+});
+
+resumeBox.addEventListener("drop", function(e) {
+    e.preventDefault();
+
+    const dt = new DataTransfer();
+
+    dt.items.add(e.dataTransfer.files[0]);
+
+    resumeInput.files = dt.files;
+
+    resumeBox.innerHTML =
+        "Selected: " + dt.files[0].name;
+});
+
+const jdBox = document.getElementById("jd-box");
+const jdInput = document.getElementById("jd");
+
+jdBox.addEventListener("drop", function(e) {
+    e.preventDefault();
+
+    const dt = new DataTransfer();
+
+    dt.items.add(e.dataTransfer.files[0]);
+
+    jdInput.files = dt.files;
+
+    jdBox.innerHTML =
+        "Selected: " + dt.files[0].name;
+});
+
+</script>
 </body>
 </html>

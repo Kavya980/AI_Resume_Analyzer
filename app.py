@@ -15,7 +15,10 @@ def home():
 
       resume_file = request.files["resume"]
       jd_file = request.files["jd"]
-
+      
+      print("Resume filename:", resume_file.filename)
+      print("JD filename:", jd_file.filename)      
+      
       resume_path = "uploads/" + resume_file.filename
       jd_path = "uploads/" + jd_file.filename
 
@@ -55,8 +58,6 @@ def home():
        ) 
       
       skill_gap_feedback = get_skill_gap_feedback(missing_jd_skills)
-      
-      
       
       return render_template(
       "index.html",
