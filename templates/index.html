@@ -85,7 +85,9 @@ ALL RESULTS HERE
 </div></div>
 {% endif %}
 
-{% if ai_match_score %}
+<p>DEBUG: {{ ai_match_score }}</p>
+
+{% if ai_match_score is not none %}
 
 <h2>AI Semantic Match Score</h2>
 
