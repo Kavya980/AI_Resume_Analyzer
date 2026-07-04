@@ -1,21 +1,21 @@
-from sentence_transformers import SentenceTransformer
-from sentence_transformers.util import cos_sim
-
-model = SentenceTransformer("all-MiniLM-L6-v2")
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 def semantic_match_score(resume_text, jd_text):
 
-    resume_embedding = model.encode(resume_text)
+    vectorizer = TfidfVectorizer()
 
-    jd_embedding = model.encode(jd_text)
+    vectors = vectorizer.fit_transform([
+        resume_text,
+        jd_text
+    ])
 
-    score = cos_sim(
-        resume_embedding,
-        jd_embedding
-    )
+    similarity = cosine_similarity(
+        vectors[0:1],
+        vectors[1:2]
+    )[0][0]
 
-    return round(float(score[0][0]) * 100, 2)
+    return round(similarity * 100, 2)
 
 
 def analyze_job_description(jd, skills, found_skills):
