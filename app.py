@@ -61,6 +61,10 @@ def home():
             skills,
             found_skills
         )
+        ai_match_score = semantic_match_score(
+           resume,
+            jd
+         )
 
         skill_gap_feedback = get_skill_gap_feedback(missing_jd_skills)
 
@@ -77,7 +81,8 @@ def home():
             match_score=match_score,
             matched_skills=matched_skills,
             missing_jd_skills=missing_jd_skills,
-            skill_gap_feedback=skill_gap_feedback
+            skill_gap_feedback=skill_gap_feedback,
+            ai_match_score=ai_match_score
         )
 
     return render_template(
@@ -93,9 +98,9 @@ def home():
         suggestions=[],
         matched_skills=[],
         missing_jd_skills=[],
-        skill_gap_feedback=None
+        skill_gap_feedback=None,
+        ai_match_score=None
     )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
